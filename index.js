@@ -12,6 +12,8 @@ const io = new Server(server);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+const users = [];
+
 app.use(express.static(join(__dirname, "www")));
 app.get("/", (req, res) => {
   res.sendFile(join(__dirname + "/www", "index.html"));
@@ -22,13 +24,20 @@ io.on("connection", (socket) => {
   console.log("a user connected", user);
   // socket.broadcast.emit('chat message','SALUT!');
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    console.info("user disconnected");
+    //TODO : supprimer le user dans Users.
   });
   socket.on('chat message', (msg) => {
-    io.emit('chat message', {user: user} , msg);
+    let ps = users.find(pseudo => pseudo.id == socket.id);
+    let pseudo = ps ? ps.user : 'Anonymous';
+    io.emit('chat message', {user: pseudo} , msg);
+  });
+  socket.on('ref user', (id, user) => {
+    users.push({id, user});
+    console.table(users);
   });
 //   let timer = setInterval(() => {io.emit("chat message", "C'est chiant hein?")}, 1500);
-  let timer = setTimeout(() => {io.to(user).emit('myID',user)}, 2000);
+  let timer = setTimeout(() => {io.to(user).emit('myID', socket.id)}, 1000);
 });
 
 server.listen(portNumber, () => {

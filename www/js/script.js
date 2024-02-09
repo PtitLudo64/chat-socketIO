@@ -6,6 +6,19 @@ const form = document.getElementById("form");
 const input = document.getElementById("input");
 const messages = document.getElementById("messages");
 
+const headerPseudo = document.querySelector('header form #pseudo');
+const headerCnxBtn = document.querySelector('header form #headerConnectBtn');
+let user="";
+
+headerCnxBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (headerPseudo.value) {
+    user = headerPseudo.value;
+    socket.emit("ref user", myId, user);
+    //TODO: disable header form
+  }
+
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();

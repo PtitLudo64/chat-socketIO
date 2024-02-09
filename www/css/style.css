@@ -14,6 +14,7 @@ header {
   align-items: center;
   & form {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
     & input {
@@ -73,20 +74,25 @@ header {
   display: flex;
   flex-direction: column;
   width: 30%;
+  min-width: 350px;
   margin: 0 auto;
 }
 #messages > figure {
   padding: 0.5rem 1rem;
-  margin: 1rem 0 0 0;
+  margin: 1.5rem 0 0 0;
   width: fit-content;
   border-radius: 15px;
   position: relative;
 }
 #messages > figure > figcaption {
-  color: #f00;
+  color: #000;
+  font-style: italic;
+  font-weight: 600;
   position: absolute;
-  top: -1rem;
+  top: -1.3rem;
   line-break: strict;
+  width: 250px;
+  left: 0;
 }
 #messages > figure:nth-child(odd) {
   background-color: #efefef;
@@ -99,6 +105,8 @@ header {
 
 #messages > figure:nth-child(even) > figcaption {
   position: absolute;
-  top: -1rem;
+  top: -1.3rem;
+  left: unset;
   right: 0;
+  text-align: right;
 }
