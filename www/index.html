@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Socket.IO chat</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Chat Socket IO</h1>
+      <form id="userName">
+        <label for="pseudo">Pseudo :</label>
+        <input type="text" name="Pseudo" id="pseudo" placeholder="Surname">
+        <select name="avatar" id="avatar">
+          <option value="male">👨</option>
+          <option value="female">👩</option>
+        </select>
+        <button>Connect</button>
+      </form>
+    </header>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
