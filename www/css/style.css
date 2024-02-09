@@ -34,6 +34,11 @@ header {
       color: #fff;
       height: 2rem;
     }
+    & button:disabled {
+      background: #555;
+      color: #999;
+      cursor: not-allowed;
+    }
   }
 }
 
@@ -59,7 +64,7 @@ header {
 #input:focus {
   outline: none;
 }
-#form > button {
+#form > #sendMessage {
   background: #333;
   border: none;
   padding: 0 1rem;
@@ -67,6 +72,18 @@ header {
   border-radius: 3px;
   outline: none;
   color: #fff;
+  cursor: pointer;
+}
+
+#form > #sendMessage:disabled {
+  background: #555;
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 3px;
+  outline: none;
+  color: #999;
+  cursor: not-allowed;
 }
 
 #messages {
