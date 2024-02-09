@@ -16,9 +16,12 @@ form.addEventListener("submit", (e) => {
 });
 
 socket.on("chat message", (u, msg) => {
-  const item = document.createElement("li");
-  item.textContent = u.user +': '+ msg;
-  messages.appendChild(item);
+  const figure = document.createElement("figure");
+  const figcaption = document.createElement('figcaption');
+  figcaption.textContent= u.user + ': ';
+  figure.textContent = msg;
+  figure.appendChild(figcaption);
+  messages.appendChild(figure);
   window.scrollTo(0, document.body.scrollHeight);
 });
 
