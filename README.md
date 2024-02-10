@@ -1,3 +1,5 @@
 # Chat with socket IO
 
-https://socket.io/
+ref : https://socket.io/
+
+run 'node index.js' and connect to IP port 1234. (http protocol)

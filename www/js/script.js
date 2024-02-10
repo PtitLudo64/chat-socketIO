@@ -6,8 +6,9 @@ const form = document.getElementById("form");
 const input = document.getElementById("input");
 const messages = document.getElementById("messages");
 
-const headerPseudo = document.querySelector("header form #pseudo");
-const headerCnxBtn = document.querySelector("header form #headerConnectBtn");
+const header = document.querySelector('header');
+const headerPseudo = header.querySelector("form #pseudo");
+const headerCnxBtn = header.querySelector("form #headerConnectBtn");
 
 const emojis = [
   { ":-)": "🙂" },
@@ -20,6 +21,11 @@ const emojis = [
   { "<3": "❤️" },
   { "to/": "🖕" },
 ];
+
+// Position da la div message.
+messages.style.marginTop = header.offsetHeight + 'px';
+// TODO : bloquer la hauteur max-heigth a 100vh - header - online title - input
+
 let user = "";
 
 // Connection button
@@ -47,8 +53,7 @@ form.addEventListener("submit", (e) => {
     let msg = input.value;
     for (let emj of emojis) {
       msg = msg.replace(Object.keys(emj), emj[Object.keys(emj)]);
-    }
-    console.log(msg);
+    };
     socket.emit("chat message", msg);
     input.value = "";
   }
