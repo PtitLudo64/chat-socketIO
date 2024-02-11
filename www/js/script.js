@@ -5,15 +5,18 @@ let myId = "";
 const form = document.getElementById("form");
 const input = document.getElementById("input");
 const messages = document.getElementById("messages");
+const online = document.querySelector("#online");
+const onlineTitle = online.querySelector('#title');
+const users = document.querySelector('#online #users');
 
-const header = document.querySelector('header');
+const header = document.querySelector("header");
 const headerPseudo = header.querySelector("form #pseudo");
 const headerCnxBtn = header.querySelector("form #headerConnectBtn");
 
 const emojis = [
   { ":-)": "🙂" },
   { ":-(": "😞" },
-  { "XD": "😂" },
+  { XD: "😂" },
   { ":')": "😂" },
   { "3:)": "😈" },
   { "8D": "🥳" },
@@ -23,8 +26,19 @@ const emojis = [
 ];
 
 // Position da la div message.
-messages.style.marginTop = header.offsetHeight + 'px';
-// TODO : bloquer la hauteur max-heigth a 100vh - header - online title - input
+messages.style.marginTop = header.offsetHeight + "px";
+messages.style.height = window.innerHeight - header.offsetHeight - form.offsetHeight - online.offsetHeight + 'px';
+users.addEventListener('click', () => {
+  console.log('Users')
+});
+onlineTitle.addEventListener('click', () => {
+  // console.log(online.style.height, parseInt(online.style.height))
+  if (parseInt(online.style.height) < 42 || online.style.height === '')
+    online.style.height = window.innerHeight * 0.5 + 'px';
+  else
+    online.style.height = '41px';
+});
+
 
 let user = "";
 
@@ -53,7 +67,7 @@ form.addEventListener("submit", (e) => {
     let msg = input.value;
     for (let emj of emojis) {
       msg = msg.replace(Object.keys(emj), emj[Object.keys(emj)]);
-    };
+    }
     socket.emit("chat message", msg);
     input.value = "";
   }
@@ -66,7 +80,7 @@ socket.on("chat message", (u, msg) => {
   figure.textContent = msg;
   figure.appendChild(figcaption);
   messages.appendChild(figure);
-  window.scrollTo(0, document.body.scrollHeight);
+  messages.scrollTo(0, messages.scrollHeight);
 });
 
 socket.on("myID", (ident) => {
