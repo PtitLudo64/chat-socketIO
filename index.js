@@ -23,8 +23,10 @@ io.on("connection", (socket) => {
   let userSocket = socket.id;
   socket.on("disconnect", () => {
     let toDelete = users.findIndex((u) => u.socketId == userSocket);
-    users.splice(toDelete, 1);
-    console.table(users);
+    if (toDelete >= 0) {
+      users.splice(toDelete, 1);
+      console.table(users);
+    }
   });
   socket.on("chat message", (msg) => {
     let ps = users.find((u) => u.socketId == userSocket);

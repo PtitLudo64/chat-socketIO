@@ -29,9 +29,7 @@ const emojis = [
 // Position da la div message.
 messages.style.marginTop = header.offsetHeight + "px";
 messages.style.height = window.innerHeight - header.offsetHeight - form.offsetHeight - online.offsetHeight + 'px';
-users.addEventListener('click', () => {
-  console.log('Users')
-});
+
 // Users onLine.
 onlineTitle.addEventListener('click', () => {
   // console.log(online.style.height, parseInt(online.style.height))
@@ -98,7 +96,12 @@ socket.on('list users', (list) => {
     usersList.push(u);
     let aUser = document.createElement("div");
     aUser.classList.add('userName');
+    aUser.setAttribute('data-id', u.socketId);
     aUser.textContent = u.pseudo;
     users.appendChild(aUser);
   });
-})
+  const allUsers = users.querySelectorAll('.userName');
+  allUsers.forEach(u => u.addEventListener('click', (e)=>{
+    console.log('aUser Clicked', e.target.dataset.id, e.target.textContent);
+  }));
+});
