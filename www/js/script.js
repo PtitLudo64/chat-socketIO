@@ -1,6 +1,7 @@
 const socket = io();
 
 let myId = "";
+let usersList = [];
 
 const form = document.getElementById("form");
 const input = document.getElementById("input");
@@ -31,10 +32,13 @@ messages.style.height = window.innerHeight - header.offsetHeight - form.offsetHe
 users.addEventListener('click', () => {
   console.log('Users')
 });
+// Users onLine.
 onlineTitle.addEventListener('click', () => {
   // console.log(online.style.height, parseInt(online.style.height))
-  if (parseInt(online.style.height) < 42 || online.style.height === '')
+  if (parseInt(online.style.height) < 42 || online.style.height === '') {
     online.style.height = window.innerHeight * 0.5 + 'px';
+    socket.emit("list users");
+  }
   else
     online.style.height = '41px';
 });
@@ -48,7 +52,6 @@ headerCnxBtn.addEventListener("click", (e) => {
   if (headerPseudo.value) {
     user = headerPseudo.value;
     socket.emit("ref user", myId, user);
-    //TODO: disable header form, enable Send button
     document.querySelector("#form #sendMessage").removeAttribute("disabled");
     document.querySelector("#form #input").removeAttribute("disabled");
     document
@@ -87,3 +90,15 @@ socket.on("myID", (ident) => {
   myId = ident;
   console.log("Mon Id:", myId);
 });
+
+socket.on('list users', (list) => {
+  usersList = [];
+  users.textContent = '';
+  list.forEach(u => {
+    usersList.push(u);
+    let aUser = document.createElement("div");
+    aUser.classList.add('userName');
+    aUser.textContent = u.pseudo;
+    users.appendChild(aUser);
+  });
+})

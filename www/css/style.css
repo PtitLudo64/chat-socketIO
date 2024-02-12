@@ -98,7 +98,25 @@ header {
     height: 90%;
     margin: 0.5rem auto auto;
     border-radius: 10px 10px 0 0;
+    padding: 0.5rem;
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    gap: .5rem;
   }
+}
+
+.userName {
+  padding: .5rem;
+  background-color: #333;
+  color: #f1f1f1;
+  border-radius: 999rem;
+  height: fit-content;
+  cursor: pointer;
+}
+.userName:hover {
+  background-color: #bbb;
+  color: #111;
 }
 
 #form > #sendMessage {
