@@ -33,6 +33,9 @@ io.on("connection", (socket) => {
     let pseudo = ps ? ps.pseudo : "Anonymous";
     io.emit("chat message", { user: pseudo }, msg);
   });
+  socket.on("private msg", (msg) => {
+    console.log('"private msg', msg);
+  });
   socket.on("list users", () => {
     io.emit('list users', users);
   });

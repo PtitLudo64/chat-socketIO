@@ -1,7 +1,7 @@
 const socket = io();
 
 let myId = "";
-let usersList = [];
+let privateMsgUsers = [];
 
 const form = document.getElementById("form");
 const input = document.getElementById("input");
@@ -63,13 +63,22 @@ headerCnxBtn.addEventListener("click", (e) => {
 });
 
 form.addEventListener("submit", (e) => {
+  const countInstance = (msg) => {
+    return msg.split('[@:').length-1;
+  }
   e.preventDefault();
   if (input.value) {
     let msg = input.value;
     for (let emj of emojis) {
       msg = msg.replace(Object.keys(emj), emj[Object.keys(emj)]);
     }
-    socket.emit("chat message", msg);
+    if (countInstance(msg)) {
+      console.log("It's a private message", countInstance(msg), privateMsgUsers);
+      socket.emit("private msg", msg);
+      privateMsgUsers=[];
+    }
+    else
+      socket.emit("chat message", msg);
     input.value = "";
   }
 });
@@ -90,10 +99,8 @@ socket.on("myID", (ident) => {
 });
 
 socket.on('list users', (list) => {
-  usersList = [];
   users.textContent = '';
   list.forEach(u => {
-    usersList.push(u);
     let aUser = document.createElement("div");
     aUser.classList.add('userName');
     aUser.setAttribute('data-id', u.socketId);
@@ -101,7 +108,12 @@ socket.on('list users', (list) => {
     users.appendChild(aUser);
   });
   const allUsers = users.querySelectorAll('.userName');
+
   allUsers.forEach(u => u.addEventListener('click', (e)=>{
-    console.log('aUser Clicked', e.target.dataset.id, e.target.textContent);
+    // console.log('aUser Clicked', e.target.dataset.id, e.target.textContent);
+    if (!privateMsgUsers.find(u => u.socket == e.target.dataset.id))
+      privateMsgUsers.push({socket: e.target.dataset.id});
+    console.table(privateMsgUsers);
+    input.value += ` [@:${e.target.textContent}] `;
   }));
 });
